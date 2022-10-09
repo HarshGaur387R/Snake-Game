@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: rgb(48, 45, 45);
+}
+
+#container {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(48, 45, 45);
+    
+}
+
+.btns{
+    margin-top: 3vh;
+    text-align: center;
+}
+
+.btns img{
+    width: 30%;
+    max-width: 30px;
+    user-select: none;
+    
+}
+
+#btnRow1{
+    display: flex;
+    justify-content: center;
+}
+
+#btnRow2{
+    margin-top: 1vh;
+    gap: 1em;
+    display: flex;
+    justify-content: center;
+}
+
+
+#upKey{
+    width: 100px;
+    background-color: rgb(42, 38, 38);
+    border-left: 0.1vh solid #000000;
+    border-top: 0.1vh solid #000000;
+}
+
+#leftKey{
+ width: 100px;
+ background-color: rgb(42, 38, 38);
+ border-left: 0.1vh solid #000000;
+ border-top: 0.1vh solid #000000;
+}
+
+#rightKey{
+    width: 100px;
+ background-color: rgb(42, 38, 38);
+ border-left: 0.1vh solid #000000;
+ border-top: 0.1vh solid #000000;
+}
+
+#downKey{
+    width: 100px;
+    background-color: rgb(42, 38, 38);
+    border-left: 0.1vh solid #000000;
+    border-top: 0.1vh solid #000000;
+}
+
+#board {
+    margin: auto;
+    background-color: rgb(57, 68, 65);
+    border-left: 0.8vh solid rgb(33, 38, 36);
+    border-right: 0.8vh solid rgb(47, 56, 53);
+    border-top: 0.8vh solid rgb(33, 38, 36);
+    border-bottom: 0.8vh solid rgb(47, 56, 53);
+    width: 80vmin;
+    height: 72vmin;
+    display: grid;
+    grid-template-rows: repeat(18, 1fr);
+    grid-template-columns: repeat(18, 1fr);
+
+}
+
+.snakeHead {
+    /* background-color: rgb(255, 255, 165); */
+    background-color: rgb(203, 203, 148);
+
+
+}
+
+.snakeBody {
+    background-color: rgb(237, 237, 146);
+
+}
+
+.snakeFood {
+    background-color: rgb(173, 173, 120);
+    border-radius: 50%;
+
+}
