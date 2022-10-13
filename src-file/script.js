@@ -8,9 +8,19 @@ let food = { x: 6, y: 6 };
 let board = document.getElementById('board');
 let score = 0;
 let highScore = 0;
-
+let state = 'play';
 
 // GAME FUNCTIONS
+
+
+function foodRandomCoordinates() {
+
+    let a = 2;
+    let b = 16;
+    let randomNumber = Math.round(a + (b - a) * Math.random());
+
+    return randomNumber;
+}
 
 
 function main(ctime) {
@@ -20,7 +30,10 @@ function main(ctime) {
         return;
     }
     lastPaintTime = ctime
-    gameEngine();
+
+    if (state === 'play') {
+        gameEngine();
+    }
 
 }
 
@@ -49,13 +62,14 @@ function gameEngine() {
 
     //  : Checking snake collide -
 
+
     if (isCollide(snakeArr)) {
         inputDir = { x: 0, y: 0 };
         alert(`[SCORE: ${score}] Press any Direction to start again!`);
         document.getElementById('score').innerHTML = `SCORE:0`;
         if (score > highScore) {
             highScore = score;
-        document.getElementById('highScore').innerHTML = `HIGH-SCORE:${highScore}`;
+            document.getElementById('highScore').innerHTML = `HIGH-SCORE:${highScore}`;
         }
         snakeArr = [{ x: 9, y: 9 }];
         score = 0;
@@ -67,23 +81,53 @@ function gameEngine() {
         document.getElementById('score').innerHTML = `SCORE:${score}`;
 
         /* For adding block from last of the array. */
-        snakeArr.push({ x: snakeArr[snakeArr.length - 1].x + inputDir.x, y: snakeArr[snakeArr.length - 1].y + inputDir.y });
 
 
         /* For adding block from start of the array. */
         // snakeArr.unshift({x:snakeArr[0].x + inputDir.x,y:snakeArr[0].y + inputDir.y})
 
-        let a = 2;
-        let b = 16;
 
-        food = { x: Math.round(a + (b - a) * Math.random()), y: Math.round(a + (b - a) * Math.random()) };
+        //DISPLAYING FOOD ON RANDOM PLACES EXCEPT SNAKE BODY.
+
+        let X = foodRandomCoordinates();
+        let Y = foodRandomCoordinates();
+        let isElementMatched = false;
+
+        while (true) {
+            snakeArr.forEach((e, index) => {
+
+                if (index > 0) {
+
+                    if (X === e.x && Y === e.y) {
+                        console.log("Yes! food coordinates is matches with e");
+                        isElementMatched = true;
+                    }
+                }
+            });
+
+            if (isElementMatched == false) {
+                food.x = X;
+                food.y = Y;
+                break;
+            }
+
+            else if (true) {
+                console.log('Yes! food coordinates matches with snake');
+                X = foodRandomCoordinates();
+                Y = foodRandomCoordinates();
+            }
+
+            isElementMatched = false;
+        }
+
+        snakeArr.push({ x: snakeArr[snakeArr.length - 1].x + inputDir.x, y: snakeArr[snakeArr.length - 1].y + inputDir.y });
 
     }
 
     // : Moving snake -
 
     for (let i = snakeArr.length - 2; i >= 0; i--) {
-        snakeArr[i + 1] = { ...snakeArr[i] };        
+        snakeArr[i + 1] = { ...snakeArr[i] };
     }
 
     snakeArr[0].x += inputDir.x;
@@ -122,6 +166,7 @@ function gameEngine() {
 //  : Starting game loop.
 window.requestAnimationFrame(main);
 
+
 document.getElementById('score').innerHTML = `SCORE:${score}`;
 // Action on key pressed ;
 
@@ -159,6 +204,15 @@ window.addEventListener('keydown', e => {
             inputDir.y = 0;
             break;
 
+        case 'Enter':
+            if (state === 'play') {
+                state = 'stop';
+            }
+            else if (state === 'stop') {
+                state = 'play';
+            }
+
+            break;
         default:
             break;
     }
