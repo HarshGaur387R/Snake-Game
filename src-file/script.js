@@ -9,6 +9,10 @@ let board = document.getElementById('board');
 let score = 0;
 let highScore = 0;
 let state = 'play';
+const biteSound = new Audio('/Snake-Game/sound/carrotnom-92106.mp3');
+const gameOver = new Audio('/Snake-Game/sound/game-over-arcade-6435.mp3');
+const crash = new Audio('/Snake-Game/sound/thump-105302.mp3');
+
 
 // GAME FUNCTIONS
 
@@ -50,6 +54,10 @@ function isCollide(snake = [{ x: 0, y: 0 }]) {
 
     // If snake bump into the wall.
     if ((snake[0].x >= 18 || snake[0].x <= 0) || (snake[0].y >= 18 || snake[0].y <= 0)) {
+
+        crash.playbackRate = 2;
+        crash.play();
+
         return true;
     }
 
@@ -65,6 +73,9 @@ function gameEngine() {
 
     if (isCollide(snakeArr)) {
         inputDir = { x: 0, y: 0 };
+
+        gameOver.play();
+
         alert(`[SCORE: ${score}] Press any Direction to start again!`);
         document.getElementById('score').innerHTML = `SCORE:0`;
         if (score > highScore) {
@@ -78,6 +89,9 @@ function gameEngine() {
     //  : Checking if food is eaten.
     if (snakeArr[0].y === food.y && snakeArr[0].x === food.x) {
         score++;
+        biteSound.playbackRate = 2;
+        biteSound.play();
+
         document.getElementById('score').innerHTML = `SCORE:${score}`;
 
         /* For adding block from last of the array. */
